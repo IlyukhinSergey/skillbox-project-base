@@ -43,5 +43,22 @@ function callfunction($url, $method, $param)
         } else {
             $controller->htmlNoAdmin();
         }
+    } elseif ($url == '/file/') {
+        $controller = new File();
+        if (!empty($_COOKIE['token'])) {
+            $controller->files($_COOKIE['token'], $method, $param);
+        } else {
+            $controller->htmlNoFile();
+        }
+    } elseif ($url == '/directory/') {
+        if (!empty($_COOKIE['token'])) {
+            $controller = new File();
+            $controller->directory($_COOKIE['token'], $method, $param);
+        } else {
+            echo 'Пользователь не зарегистрирован';
+        }
+    } elseif ($url == '/files/share/'){
+        $controller = new File();
+        $controller->filesShare($method, $param);
     }
 }
