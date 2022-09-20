@@ -36,5 +36,12 @@ function callfunction($url, $method, $param)
     if ($url == '/user/') {
         $controller = new User();
         $controller->user($method, $param);
+    } elseif ($url == '/admin/user/') {
+        $controller = new Admin();
+        if (!empty($_COOKIE['token'])) {
+            $controller->checkAccess($_COOKIE['token'], $method, $param);
+        } else {
+            $controller->htmlNoAdmin();
+        }
     }
 }
